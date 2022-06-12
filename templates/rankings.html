@@ -1,0 +1,16 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Rankings || GUDLFT</title>
+</head>
+<body>
+ <ul>
+       {% for elem in club %}
+            <li> <h2>Club's name : {{elem.name}}</h2></li>
+            <p>Points available : {{elem['points']}}</p>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
