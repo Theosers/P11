@@ -1,6 +1,3 @@
-import pytest
-from tests.conf_test import client
-
 def test_index_route(client):
     response = client.get('/')
     response_data = response.data.decode()
@@ -17,7 +14,7 @@ def test_index_connexion_failed(client):
 
 def test_logout(client):
     response = client.get('/logout')
-    assert response.status_code == 302  # logout will redirect the page
+    assert response.status_code == 302
 
 
 def test_purchase_places(client):
@@ -41,7 +38,6 @@ def test_purchase_too_much_places(client):
                                                     }
                            )
     assert response.status_code == 200
-    # assert 'You can only book for 12 places or less for a competition' in response.data.decode()
 
 
 def test_show_summary(client):
@@ -73,5 +69,3 @@ def test_purchase_not_enought_points(client):
                                                     }
                            )
     assert response.status_code == 200
-    #print(response.data.decode())
-    # assert 'Your club does not have enough points' in response.data.decode()
