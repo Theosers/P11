@@ -39,15 +39,15 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    foundClub = [c for c in clubs if c['name'] == club][0]
-    foundCompetition = [c for c in competitions if c['name'] == competition][0]
-    if foundClub and foundCompetition:
-        flash("Here is the form to complete")
-        return render_template('booking.html', club=foundClub, competition=foundCompetition)
-    else:
-        flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
-
+    message=""
+    try:
+        foundClub = [c for c in clubs if c['name'] == club][0]
+        foundCompetition = [c for c in competitions if c['name'] == competition][0]
+        message = "Here is the form to complete"
+        return render_template('booking.html', club=foundClub, competition=foundCompetition, message=message)
+    except IndexError:
+        message='The name of the club or competition is incorrect'
+        return render_template('booking.html',club=None, competition=None, message=message)
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():

@@ -52,20 +52,36 @@ def test_can_not_purchase_places_because_of_old_date(client):
     assert response.status_code == 200
     assert 'Sorry, this competition has already taken place' in response.data.decode()
 
-
-def test_purchase_places(client):
-    response = client.post('/purchasePlaces', data={'club': 'Simply Lift',
-                                                    'competition': 'Spring Festival', 'places': '1'
-                                                    }
-                           )
-    assert response.status_code == 200
-    assert 'complete' in response.data.decode()
-
-
 def test_purchase_not_enought_points(client):
     response = client.post('/purchasePlaces', data={'club': 'Simply Lift',
                                                     'competition': 'Spring Festival',
-                                                    'places': 6
+                                                    'places': '6'
                                                     }
                            )
     assert response.status_code == 200
+
+
+
+def test_only_purchase_limited_places(client):
+    response = client.post('/purchasePlaces', data={'club': 'Simply Lift',
+                                                    'competition': 'Spring Festival',
+                                                    'places': 14
+                                                    }
+                           )
+    assert response.status_code == 200
+    assert 'You can only book for 12 places or less for a competition' in response.data.decode()
+
+
+def test_book_route_ok(client):
+    response = client.get('/book/Spring Festival/Simply Lift')
+    response_data = response.data.decode()
+    assert response.status_code == 200
+    assert 'How many places?' in response.data.decode()
+
+def test_book_route_wrong_club_or_festival(client):
+    response = client.get('/book/bad/Simply Lift')
+    assert response.status_code == 200
+    assert 'The name of the club or competition is incorrect' in response.data.decode()
+    response = client.get('/book/Spring Festival/bad')
+    assert response.status_code == 200
+    assert 'The name of the club or competition is incorrect' in response.data.decode()
