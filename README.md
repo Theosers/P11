@@ -1,15 +1,19 @@
 # gudlift-registration
 
+This project was built on Python 3.11
+
+Description : digital platform to coordinate strength competitions (deadlifting, strongman) in North America and Australia.
 
 
-Installation
+Setup :
 
-
-4. Current Setup
-
-     
-    * competitions.json - list of competitions
-    * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login.
-
-5. Testing
-
+- Download this project
+- Install all requirements in requirements.txt :
+```python 
+python3 -m pip install -r requirements.txt
+```
+-launch server with the flask command:
+```python 
+export FLASK_APP=server.py
+flask run
+```
